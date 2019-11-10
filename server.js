@@ -5,7 +5,46 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use((req,res,next)=>{
+
+  res.header('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Headers,Origin,X-Requested-With,Content-Type',);
+
+
+  if(req.method === 'OPTIONS'){
+      req.header('Access-Control-Allow-Methods','PUT,POST,DELETE,GET');
+      return res.status(200).json({});
+  }
+  next();
+
+});
+
+
+app.use((req,res,next)=>{
+
+  const error=new Error('Not found');
+  error.status=400;
+
+  next(error);
+
+});
+
+
+app.use((error,req,res,next)=>{
+
+  res.status(error.status || 500);
+  res.json({
+      error:{
+         message:error.message
+
+      }
+  })
+   
+
+});
 
 
 app.post("/email",(req,res)=>{
@@ -53,6 +92,6 @@ app.post("/email",(req,res)=>{
 })  });
    
 
-app.listen(  process.env.PORT ||'3000', () => {
+app.listen(process.env.PORT || '3000', () => {
   console.log('Server started on port 3000');
 });
