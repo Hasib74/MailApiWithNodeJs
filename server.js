@@ -16,7 +16,7 @@ app.use((req,res,next)=>{
 
 
   if(req.method === 'OPTIONS'){
-      req.header('Access-Control-Allow-Methods','PUT');
+      req.header('Access-Control-Allow-Methods','POST');
       return res.status(200).json({});
   }
   next();
