@@ -28,7 +28,7 @@ app.post("/email",(req,res)=>{
       var mailOptions = {
         from: req.body.userEmail,
         to: req.body.friendEmail,
-        subject: req.body.seubject,
+        subject: req.body.subject,
         text: req.body.body
       };
       
